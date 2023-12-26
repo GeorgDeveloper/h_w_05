@@ -1,5 +1,3 @@
-package ru.develop.client;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,22 +8,18 @@ import java.net.Socket;
 import java.util.Scanner;
 
 
-
-
-@AllArgsConstructor
 @Getter
 @Setter
 public class Client {
 
-    private boolean isAdmin = false;
-
     public static void main(String[] args) {
         try {
-            new Client(true).start();
+            new Client().start();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
     public static void start() throws IOException {
         final Socket client;
         client = new Socket("localhost", MServer.PORT);
@@ -43,6 +37,7 @@ public class Client {
         // запись
         new Thread(() -> {
             try (PrintWriter output = new PrintWriter(client.getOutputStream(), true)) {
+                output.println(true);
                 Scanner consoleScanner = new Scanner(System.in);
                 while (true) {
                     String consoleInput = consoleScanner.nextLine();
